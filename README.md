@@ -1,4 +1,11 @@
 # Kruskal
-An implementation of Kruskals graph algorithm
+* This application is a java implementation of Kruskal's Minimum Spanning Tree
+* Algorithm, and tests for it. The code is poached from psuedo code on page 631
+* of the text book "Introduction to Algorithms, 3rd Edition", by Cormen et al.
 
-based on Chapter 23 of Cormen's Introduction to Algorithms
+output:
+
+Kruskal's Algorithm...
+Graph weight is 37 num edges is 8
+Test Passed
+
