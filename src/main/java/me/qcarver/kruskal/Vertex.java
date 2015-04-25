@@ -7,30 +7,23 @@ package me.qcarver.kruskal;
 public class Vertex {
     public final char label;
     
+    /**
+     * C'tor to build Vertex, requires a single character label
+     * @param label 
+     */
     Vertex(char label){
         this.label = label;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        } else {
-            return equals((Vertex)obj);
-        }
-    }
     
+    /**
+     * Vertices are compared by their labels
+     * @param vertex the vertex to compare with this one
+     * @return true if labels are teh same, flase otw
+     */
     public boolean equals(Vertex vertex){
         return (this.label == vertex.label);
-    }
-    
+    }  
     
     //hide private constructor
-    private Vertex(){label = 'a';};
-    
-    
-    
+    private Vertex(){label = 0x07;};
 }
