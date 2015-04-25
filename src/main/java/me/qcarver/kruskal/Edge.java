@@ -1,7 +1,5 @@
 package me.qcarver.kruskal;
 
-import java.util.Comparator;
-
 /**
  *
  * @author Quinn
@@ -50,6 +48,5 @@ public class Edge implements Comparable<Edge>{
         Integer it1 = t1.weight;        
         return it.compareTo(it1);
     }
-    
     
 }

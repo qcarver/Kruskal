@@ -12,11 +12,15 @@ public class Vertex {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o.getClass().isInstance(Vertex.class)){
-            return equals((Vertex)o);
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
         }
-        return false;
+        if (getClass() != obj.getClass()) {
+            return false;
+        } else {
+            return equals((Vertex)obj);
+        }
     }
     
     public boolean equals(Vertex vertex){
@@ -26,5 +30,7 @@ public class Vertex {
     
     //hide private constructor
     private Vertex(){label = 'a';};
+    
+    
     
 }

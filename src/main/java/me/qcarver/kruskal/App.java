@@ -20,22 +20,32 @@ public class App
         
         App app = new App();
         
+         Vertex a = new Vertex('a');
+         Vertex b = new Vertex('b');
+         Vertex c = new Vertex('c');
+         Vertex d = new Vertex('d');
+         Vertex e = new Vertex('e');
+         Vertex f = new Vertex('f');
+         Vertex g = new Vertex('g');
+         Vertex h = new Vertex('h');
+         Vertex i = new Vertex('i');        
+        
         //The graph on page 633 or Cormen's Intro to Alg. 3rd ed.
         Graph G = new Graph();
-        G.add(new Edge(new Vertex('a'), new Vertex('b'), 4));
-        G.add(new Edge(new Vertex('b'), new Vertex('c'), 8));
-        G.add(new Edge(new Vertex('c'), new Vertex('d'), 7));
-        G.add(new Edge(new Vertex('d'), new Vertex('e'), 9));
-        G.add(new Edge(new Vertex('e'), new Vertex('f'), 10));
-        G.add(new Edge(new Vertex('f'), new Vertex('g'), 2));
-        G.add(new Edge(new Vertex('g'), new Vertex('h'), 1));
-        G.add(new Edge(new Vertex('h'), new Vertex('a'), 8));
-        G.add(new Edge(new Vertex('i'), new Vertex('c'), 2));
-        G.add(new Edge(new Vertex('c'), new Vertex('f'), 4));
-        G.add(new Edge(new Vertex('i'), new Vertex('g'), 6));
-        G.add(new Edge(new Vertex('i'), new Vertex('h'), 7));
-        G.add(new Edge(new Vertex('b'), new Vertex('h'), 11)); 
-        G.add(new Edge(new Vertex('d'), new Vertex('f'), 14)); 
+        G.add(new Edge(a,b,4));
+        G.add(new Edge(b,c,8));
+        G.add(new Edge(c,d,7));
+        G.add(new Edge(d,e,9));
+        G.add(new Edge(e,f,10));
+        G.add(new Edge(f,g,2));
+        G.add(new Edge(g,h,1));
+        G.add(new Edge(h,a,8));
+        G.add(new Edge(i,c,2));
+        G.add(new Edge(c,f,4));
+        G.add(new Edge(i,g,6));
+        G.add(new Edge(i,h,7));
+        G.add(new Edge(b,h,11)); 
+        G.add(new Edge(d,f,14)); 
         
         Graph A = app.Kruskal(G);
         
@@ -46,6 +56,8 @@ public class App
                
         //is A's total weigtht 4+8+1+2+4+2+7+9? ...93 is total fail
         final int minWeight = 4+8+1+2+4+2+7+9;
+        System.out.println("Graph weight is " + A.getWeight()
+                + " num edges is " + A.getEdgesNonDecreasing().size());
         assert(A.getWeight() == minWeight);
         
         //if we got to this line without asserting(false), the test is passed
@@ -83,10 +95,13 @@ public class App
      * @param the vertex we want to find in a set
      * @return the set which contained the vertex
      */
-    Set<Vertex> findSet(Vertex vertex){
-        Set<Vertex>  rv = null;
-        for (Set<Vertex> set: sets){
+    HashSet<Vertex> findSet(Vertex vertex){
+        HashSet<Vertex>  rv = null;
+        for (HashSet<Vertex> set: sets){
             if (set.contains(vertex)){
+                if (rv != null){
+                    System.err.println("vertices shouldn't exits in more than one set");
+                }
                 rv = set;
             }
         }
@@ -99,14 +114,19 @@ public class App
      * @param v2 a set which contains the vertex v2
      */
     void union(Vertex v1, Vertex v2){
-        Set<Vertex> s1 = findSet(v1);
-        Set<Vertex> s2 = findSet(v2);
+        HashSet<Vertex> s1 = findSet(v1);
+        HashSet<Vertex> s2 = findSet(v2);
         
         assert(s1 != null);
         assert(s2 != null);
         
-        s1.addAll(s2);
+        HashSet<Vertex> union = new HashSet<Vertex>(s1);
+        union.addAll(s2);
+        sets.remove(s1);
         sets.remove(s2);
+        s1= null;
+        s2 = null;
+        sets.add(union);
     }
     
     Graph Kruskal(Graph G) {
@@ -119,16 +139,16 @@ public class App
         //for each edge, smallest first
         for (Edge edge : G.getEdgesNonDecreasing()) {
             //if the end point bridges the two sets
-            if (findSet(edge.u) != findSet(edge.v)) {
+            if (findSet(edge.u)!=(findSet(edge.v))) {
                 //add the edge to the MST
                 A.add(edge);
                 //update the sets
                 union(edge.u, edge.v);
             }
+            else{
+                System.out.println("Sets ar equal");
+            }
         }
         return A;
-    }
-    
-    
-    
+    }   
 }
